@@ -134,7 +134,9 @@ var Demiguise = (function (_Component) {
         Container,
         {
           hidden: isMessageHidden,
-          onTransitionEnd: this.transitionEndHandler },
+          onTransitionEnd: this.transitionEndHandler,
+          style: this.props.style
+        },
         currentMessage
       );
     }
