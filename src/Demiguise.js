@@ -97,7 +97,9 @@ class Demiguise extends Component {
     return (
       <Container
         hidden={ isMessageHidden }
-        onTransitionEnd={ this.transitionEndHandler }>
+        onTransitionEnd={ this.transitionEndHandler }
+        style={ this.props.style }
+      >
         { currentMessage }
       </Container>
     );
