@@ -19,8 +19,7 @@ var App = React.createClass({
       React.createElement(Demiguise, {
         messages: messages,
         delay: delays,
-        loop: true,
-        style: { height: '50%' }
+        loop: true
       })
     );
   }
