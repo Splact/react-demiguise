@@ -8,6 +8,18 @@ var Demiguise = require('react-demiguise');
 var App = React.createClass({
   displayName: 'App',
 
+  getInitialState: function getInitialState() {
+    return {
+      loop: 1
+    };
+  },
+  onLoopEnd: function onLoopEnd() {
+    console.log('Loop ' + this.state.loop + ' ended');
+
+    this.setState({
+      loop: this.state.loop + 1
+    });
+  },
   render: function render() {
     var messages = ['Abra cadabra flipendo', 'Macaroni tortellini', 'Lightsaber nintendo', 'Alabif shazam!', 'Salami broccoli ballerina', 'Geth pace Stark', 'Zucchini fresco pizza tombola', 'Tortellini paparazzi', 'Darth algorithm jedi', 'Mozzarella fritti'];
 
@@ -19,7 +31,8 @@ var App = React.createClass({
       React.createElement(Demiguise, {
         messages: messages,
         delay: delays,
-        loop: true
+        loop: true,
+        onLoopEnd: this.onLoopEnd
       })
     );
   }
