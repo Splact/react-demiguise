@@ -47,6 +47,10 @@ import Demiguise from 'react-demiguise';
 * delay – Can be both a number representing delay among messages in millis and an array of numbers defining a different delay per message (default `3000`)
 * loop – messages are played in loop if true (default `false`)
 
+### Events
+
+* onLoopEnd – callback executed on loop end
+
 ## Development (`src`, `lib` and the build process)
 
 **NOTE:** The source code for the component is in `src`. A transpiled CommonJS version (generated with Babel) is available in `lib` for use with node.js, browserify and webpack. A UMD bundle is also built to `dist`, which can be included without the need for any build system.

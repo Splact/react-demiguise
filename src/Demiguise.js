@@ -43,11 +43,16 @@ class Demiguise extends Component {
   /* Internal Methods */
   setNextMessage() {
     const { currentMessage } = this.state;
-    const { messages, delay, loop } = this.props;
+    const { messages, delay, loop, onLoopEnd } = this.props;
 
     this.messageIndex = this.messageIndex + 1;
 
     if (this.messageIndex === messages.length) {
+      // the last message of the array is currently shown
+      if (onLoopEnd) {
+        onLoopEnd();
+      }
+
       this.messageIndex = loop ? 0 : -1;
     }
 
@@ -107,17 +112,18 @@ class Demiguise extends Component {
 }
 
 Demiguise.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.string),
   delay: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.number),
   ]),
   loop: PropTypes.bool,
+  messages: PropTypes.arrayOf(PropTypes.string),
+  onLoopEnd: PropTypes.func,
 };
 Demiguise.defaultProps = {
-  messages: [],
   delay: 3000,
   loop: false,
+  messages: [],
 };
 
 export default Demiguise;

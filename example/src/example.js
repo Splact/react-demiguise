@@ -3,7 +3,19 @@ var ReactDOM = require('react-dom');
 var Demiguise = require('react-demiguise');
 
 var App = React.createClass({
-  render () {
+  getInitialState() {
+    return {
+      loop: 1,
+    };
+  },
+  onLoopEnd() {
+    console.log(`Loop ${this.state.loop} ended`);
+
+    this.setState({
+      loop: this.state.loop + 1,
+    });
+  },
+  render() {
     var messages = [
       'Abra cadabra flipendo',
       'Macaroni tortellini',
@@ -34,6 +46,7 @@ var App = React.createClass({
           messages={ messages }
           delay={ delays }
           loop
+          onLoopEnd={ this.onLoopEnd }
         />
       </div>
     );
