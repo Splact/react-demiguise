@@ -74,10 +74,16 @@ var Demiguise = (function (_Component) {
       var messages = _props.messages;
       var delay = _props.delay;
       var loop = _props.loop;
+      var onLoopEnd = _props.onLoopEnd;
 
       this.messageIndex = this.messageIndex + 1;
 
       if (this.messageIndex === messages.length) {
+        // the last message of the array is currently shown
+        if (onLoopEnd) {
+          onLoopEnd();
+        }
+
         this.messageIndex = loop ? 0 : -1;
       }
 
@@ -146,14 +152,15 @@ var Demiguise = (function (_Component) {
 })(_react.Component);
 
 Demiguise.propTypes = {
-  messages: _react.PropTypes.arrayOf(_react.PropTypes.string),
   delay: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.arrayOf(_react.PropTypes.number)]),
-  loop: _react.PropTypes.bool
+  loop: _react.PropTypes.bool,
+  messages: _react.PropTypes.arrayOf(_react.PropTypes.string),
+  onLoopEnd: _react.PropTypes.func
 };
 Demiguise.defaultProps = {
-  messages: [],
   delay: 3000,
-  loop: false
+  loop: false,
+  messages: []
 };
 
 exports['default'] = Demiguise;
