@@ -44,6 +44,8 @@ var Demiguise = (function (_Component) {
       isMessageHidden: true
     };
 
+    this.mainPropertyTransition = null;
+
     // binding Methods
     this.setNextMessage = this.setNextMessage.bind(this);
     this.transitionEndHandler = this.transitionEndHandler.bind(this);
@@ -104,12 +106,18 @@ var Demiguise = (function (_Component) {
     }
   }, {
     key: 'transitionEndHandler',
-    value: function transitionEndHandler() {
+    value: function transitionEndHandler(e) {
       var delay = this.props.delay;
       var _state = this.state;
       var currentMessage = _state.currentMessage;
       var isMessageHidden = _state.isMessageHidden;
       var nextMessage = _state.nextMessage;
+
+      if (!this.mainPropertyTransition) {
+        this.mainPropertyTransition = e.propertyName;
+      } else if (this.mainPropertyTransition !== e.propertyName) {
+        return false;
+      }
 
       // if message is now hidden
       if (isMessageHidden) {
