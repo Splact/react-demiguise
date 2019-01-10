@@ -6,6 +6,7 @@ interface ContainerProps {
   hidden: boolean,
   onTransitionEnd: Function,
   style: any,
+  className?: string,
 }
 const Container = styled('div')<ContainerProps>`
   display: flex;
@@ -21,6 +22,7 @@ const Container = styled('div')<ContainerProps>`
 `;
 
 export interface Props {
+  className?: string
   delay: number | [number],
   loop: boolean,
   messages: [string],
@@ -117,13 +119,15 @@ export default class Demiguise extends React.Component<Props, State> {
   }
 
   render() {
+    const { className, style } = this.props;
     const { currentMessage, isMessageHidden } = this.state;
 
     return (
       <Container
         hidden={ isMessageHidden }
         onTransitionEnd={ this.transitionEndHandler }
-        style={ this.props.style }
+        style={ style }
+        className={ className }
       >
         { currentMessage }
       </Container>
