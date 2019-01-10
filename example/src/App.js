@@ -1,22 +1,22 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Demiguise = require('react-demiguise');
+import React, { Component } from 'react';
 
-var App = React.createClass({
-  getInitialState() {
-    return {
-      loop: 1,
-    };
-  },
-  onLoopEnd() {
+import Demiguise from 'react-demiguise';
+
+export default class App extends Component {
+  state = {
+    loop: 1,
+  };
+
+  onLoopEnd = () => {
     console.log(`Loop ${this.state.loop} ended`);
 
     this.setState({
       loop: this.state.loop + 1,
     });
-  },
-  render() {
-    var messages = [
+  }
+
+  render () {
+    const messages = [
       'Abra cadabra flipendo',
       'Macaroni tortellini',
       'Lightsaber nintendo',
@@ -29,7 +29,7 @@ var App = React.createClass({
       'Mozzarella fritti',
     ];
 
-    var delays = [
+    const delays = [
       1500,
       1000,
       2500,
@@ -51,6 +51,4 @@ var App = React.createClass({
       </div>
     );
   }
-});
-
-ReactDOM.render(<App />, document.getElementById('app'));
+}

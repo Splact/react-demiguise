@@ -1,12 +1,17 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
 
-const Container = styled.div`
+interface ContainerProps {
+  hidden: boolean,
+  onTransitionEnd: Function,
+  style: any,
+}
+const Container = styled('div')<ContainerProps>`
   display: flex;
-  flexDirection: column;
-  justifyContent: center;
-  alignItems: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   width: 100%;
   height: 100%;
@@ -15,20 +20,35 @@ const Container = styled.div`
   opacity: ${props => props.hidden ? 0 : 1};
 `;
 
+export interface Props {
+  delay: number | [number],
+  loop: boolean,
+  messages: [string],
+  onLoopEnd: Function,
+  style: any,
+}
 
-class Demiguise extends Component {
-  constructor(props) {
-    super(props);
+export interface State {
+  currentMessage?: string | null,
+  nextMessage?: string | null,
+  isMessageHidden: boolean,
+}
 
-    this.state = {
-      currentMessage: null,
-      isMessageHidden: true,
-    };
 
-    // binding Methods
-    this.setNextMessage = this.setNextMessage.bind(this);
-    this.transitionEndHandler = this.transitionEndHandler.bind(this);
-  }
+export default class Demiguise extends React.Component<Props, State> {
+  static defaultProps = {
+    delay: 3000,
+    loop: false,
+    messages: [],
+  };
+
+  state = {
+    currentMessage: null,
+    nextMessage: null,
+    isMessageHidden: true,
+  };
+
+  messageIndex: number;
 
   /* React Lifecycle */
   componentDidMount() {
@@ -41,9 +61,9 @@ class Demiguise extends Component {
   }
 
   /* Internal Methods */
-  setNextMessage() {
+  setNextMessage = () => {
     const { currentMessage } = this.state;
-    const { messages, delay, loop, onLoopEnd } = this.props;
+    const { messages, loop, onLoopEnd } = this.props;
 
     this.messageIndex = this.messageIndex + 1;
 
@@ -72,9 +92,9 @@ class Demiguise extends Component {
       }
     }
   }
-  transitionEndHandler() {
+  transitionEndHandler = () => {
     const { delay } = this.props;
-    const { currentMessage, isMessageHidden, nextMessage } = this.state;
+    const { isMessageHidden, nextMessage } = this.state;
 
     // if message is now hidden
     if (isMessageHidden) {
@@ -110,20 +130,3 @@ class Demiguise extends Component {
     );
   }
 }
-
-Demiguise.propTypes = {
-  delay: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.number),
-  ]),
-  loop: PropTypes.bool,
-  messages: PropTypes.arrayOf(PropTypes.string),
-  onLoopEnd: PropTypes.func,
-};
-Demiguise.defaultProps = {
-  delay: 3000,
-  loop: false,
-  messages: [],
-};
-
-export default Demiguise;
